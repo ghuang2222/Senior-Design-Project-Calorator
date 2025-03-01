@@ -1,0 +1,41 @@
+.page { display: none; }
+.page.active { display: block; }
+/* Hero Section */
+.hero-section {
+    background: url('../assets/images/hero-bg.jpg') no-repeat center center/cover;
+    color: black;
+    padding: 100px 0;
+}
+
+/* Features */
+.features {
+    padding: 60px 0;
+}
+
+/* Why Choose */
+#home .list-unstyled {
+    text-align: left;
+}
+
+/* Team Section */
+.team-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+/* Testimonials */
+#home .testimonials {
+    background: #f8f9fa;
+    padding: 50px;
+}
+
+/* Call to Action */
+.call-to-action {
+    background: #007bff;
+    color: white;
+    padding: 40px;
+    border-radius: 10px;
+}
+

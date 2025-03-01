@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorator</title>
+    <link href="css/main.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="assets/images/logo.png" alt="Calorator Logo" height="40" class="me-2">
+                <span class="fw-bold">Calorator</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home" onclick="showPage('home')">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#track-meal" onclick="showPage('track-meal')">Track a Meal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#report" onclick="showPage('report')">Report</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white px-3" href="#login" onclick="showPage('login')">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <section id="home" class="page active">
+        <div class="container text-center hero-section">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="display-4 fw-bold">Welcome to Calorator</h1>
+                    <p class="lead">Your AI-powered companion for smart calorie tracking and healthier eating.</p>
+                    <p>Upload a photo of your meal, and our advanced AI will analyze it, calculate its calories, and provide healthier meal suggestions.</p>
+                    <a href="#track-meal" class="btn btn-primary btn-lg mt-3">Get Started</a>
+                </div>
+                <div class="col-md-6">
+                    <img src="assets/images/home.png" alt="Healthy Food" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    
+        <!-- Features Section -->
+        <div class="container text-center mt-5">
+            <h2 class="fw-bold">Key Features</h2>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <i class="fas fa-camera fa-3x text-primary"></i>
+                    <h4 class="mt-3">AI-Powered Food Recognition</h4>
+                    <p>Snap a photo and let AI detect food and its calorie content.</p>
+                </div>
+                <div class="col-md-4">
+                    <i class="fas fa-chart-line fa-3x text-primary"></i>
+                    <h4 class="mt-3">Calorie & Nutrient Tracking</h4>
+                    <p>Get precise calorie calculations and nutritional breakdowns.</p>
+                </div>
+                <div class="col-md-4">
+                    <i class="fas fa-heartbeat fa-3x text-primary"></i>
+                    <h4 class="mt-3">Healthy Meal Suggestions</h4>
+                    <p>Receive personalized meal recommendations based on your goals.</p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Testimonials -->
+        <div class="container text-center mt-5">
+            <h2 class="fw-bold">What Users Say</h2>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <p>"Calorator changed the way I track my diet. It’s fast, easy, and accurate!"</p>
+                    <h6>- Anna R.</h6>
+                </div>
+                <div class="col-md-4">
+                    <p>"This app helped me stay on top of my health goals. The AI is amazing!"</p>
+                    <h6>- Mark T.</h6>
+                </div>
+                <div class="col-md-4">
+                    <p>"I love the meal suggestions. I feel healthier and more energetic!"</p>
+                    <h6>- Lisa M.</h6>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Call to Action -->
+        <div class="container text-center mt-5 call-to-action">
+            <h2>Ready to Take Control of Your Diet?</h2>
+            <p>Start tracking your calories effortlessly today!</p>
+            <a href="#track-meal" class="btn btn-success btn-lg">Get Started Now</a>
+        </div>
+    </section>
+    
+    
+    
+    <section id="track-meal" class="page">
+        <div class="container mt-5">
+            <h2>Track a Meal</h2>
+            <input type="file" class="form-control" id="meal-image">
+            <button class="btn btn-primary mt-3" onclick="analyzeMeal()">Analyze</button>
+            <p id="meal-output" class="mt-3"></p>
+        </div>
+    </section>
+    
+    <section id="report" class="page">
+        <div class="container mt-5">
+            <h2>Your Reports</h2>
+            <p>Here you will see all your tracked meals.</p>
+            <ul id="report-list" class="list-group"></ul>
+        </div>
+    </section>
+    
+    <section id="login" class="page">
+        <div class="container mt-5">
+            <h2>Login</h2>
+            <form onsubmit="loginUser(event)">
+                <input type="text" class="form-control mb-3" placeholder="Username" id="username">
+                <input type="password" class="form-control mb-3" placeholder="Password" id="password">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
