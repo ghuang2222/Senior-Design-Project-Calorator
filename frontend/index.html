@@ -5,111 +5,536 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calorator</title>
     <link href="css/main.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center" href="#">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#home" onclick="showPage('home')">
                 <img src="assets/images/logo.png" alt="Calorator Logo" height="40" class="me-2">
-                <span class="fw-bold">Calorator</span>
+                <span class="fw-bold text-primary">Calorator</span>
             </a>
             <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#home" onclick="showPage('home')">Home</a>
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item mx-2">
+                        <a class="nav-link active" aria-current="page" href="#home" onclick="showPage('home')">
+                            <i class="fas fa-home me-1"></i> Home
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#track-meal" onclick="showPage('track-meal')">Track a Meal</a>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link" href="#track-meal" onclick="showPage('track-meal')">
+                            <i class="fas fa-utensils me-1"></i> Track a Meal
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#report" onclick="showPage('report')">Report</a>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link" href="#report" onclick="showPage('report')">
+                            <i class="fas fa-chart-pie me-1"></i> Report
+                        </a>
                     </li>
                 </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-primary text-white px-3" href="#login" onclick="showPage('login')">Login</a>
+                <div class="d-flex align-items-center">
+                    <a href="#login" onclick="showPage('login')" 
+                       class="btn btn-primary rounded-pill px-4 shadow-1-strong" id="loginBtn">
+                        <i class="fas fa-sign-in-alt me-2"></i>Login
+                    </a>
+                    
+                    <!-- User dropdown (hidden by default, shown after login) -->
+                    <div class="dropdown d-none" id="userDropdown">
+                        <a class="dropdown-toggle d-flex align-items-center hidden-arrow" 
+                           href="#" id="navbarDropdownMenuAvatar" role="button" 
+                           data-mdb-toggle="dropdown" aria-expanded="false">
+                            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" 
+                                 height="35" alt="User Avatar" loading="lazy" />
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
+                            <li>
+                                <a class="dropdown-item" href="#profile">
+                                    <i class="fas fa-user-circle me-2"></i>My profile
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#settings">
+                                    <i class="fas fa-cog me-2"></i>Settings
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#" onclick="logoutUser()">
+                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                </a>
                     </li>
                 </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
     
+    <!-- Add padding to body to account for fixed navbar -->
+    <div style="padding-top: 76px;"></div>
+    
     <section id="home" class="page active">
-        <div class="container text-center hero-section">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="container">
             <div class="row align-items-center">
-                <div class="col-md-6">
-                    <h1 class="display-4 fw-bold">Welcome to Calorator</h1>
-                    <p class="lead">Your AI-powered companion for smart calorie tracking and healthier eating.</p>
-                    <p>Upload a photo of your meal, and our advanced AI will analyze it, calculate its calories, and provide healthier meal suggestions.</p>
-                    <a href="#track-meal" class="btn btn-primary btn-lg mt-3">Get Started</a>
+                    <div class="col-lg-6 hero-content">
+                        <h1 class="display-4 fw-bold mb-4 hero-title">
+                            Track Your Nutrition<br>
+                            <span class="gradient-text">With AI Power</span>
+                        </h1>
+                        <p class="lead mb-4 hero-text">Your intelligent companion for healthier eating habits. Simply snap a photo of your meal, and let our AI calculate calories and nutrients instantly.</p>
+                        <div class="hero-buttons">
+                            <a href="#track-meal" class="btn btn-primary btn-lg me-3">
+                                <i class="fas fa-camera me-2"></i>Track Now
+                            </a>
+                            <a href="#" class="btn btn-outline-primary btn-lg">
+                                <i class="fas fa-play-circle me-2"></i>How it Works
+                            </a>
+                        </div>
+                        <div class="hero-stats mt-5">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="stat-item">
+                                        <h3 class="gradient-text">NYU</h3>
+                                        <p>Senior Project</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="stat-item">
+                                        <h3 class="gradient-text">2025</h3>
+                                        <p>Launch Year</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="stat-item">
+                                        <h3 class="gradient-text">AI</h3>
+                                        <p>Powered Tech</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4 text-center achievement-badge">
+                                <span class="badge bg-light text-primary">
+                                    <i class="fas fa-award me-2"></i>NYU Tandon School of Engineering
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 hero-image">
+                        <div class="image-wrapper">
+                            <div class="floating-card card-1">
+                                <i class="fas fa-utensils"></i>
+                                <span>Instant Analysis</span>
+                            </div>
+                            <div class="floating-card card-2">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Track Progress</span>
+                            </div>
+                            <div class="floating-card card-3">
+                                <i class="fas fa-brain"></i>
+                                <span>AI Powered</span>
+                            </div>
+                            <img src="assets/images/healthy-plate.png" alt="Healthy Food Plate" class="main-image">
+                        </div>
                 </div>
-                <div class="col-md-6">
-                    <img src="assets/images/home.png" alt="Healthy Food" class="img-fluid">
                 </div>
             </div>
         </div>
     
         <!-- Features Section -->
-        <div class="container text-center mt-5">
-            <h2 class="fw-bold">Key Features</h2>
-            <div class="row mt-4">
+        <div class="container features-section">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold section-title">Why Choose Calorator</h2>
+                <p class="section-subtitle">Experience the future of nutrition tracking</p>
+            </div>
+            <div class="row g-4">
                 <div class="col-md-4">
-                    <i class="fas fa-camera fa-3x text-primary"></i>
-                    <h4 class="mt-3">AI-Powered Food Recognition</h4>
-                    <p>Snap a photo and let AI detect food and its calorie content.</p>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <h4>Smart Recognition</h4>
+                        <p>Advanced AI technology identifies food items and portions with incredible accuracy</p>
+                    </div>
                 </div>
                 <div class="col-md-4">
-                    <i class="fas fa-chart-line fa-3x text-primary"></i>
-                    <h4 class="mt-3">Calorie & Nutrient Tracking</h4>
-                    <p>Get precise calorie calculations and nutritional breakdowns.</p>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h4>Detailed Analytics</h4>
+                        <p>Get comprehensive nutritional breakdowns and track your eating habits over time</p>
+                    </div>
                 </div>
                 <div class="col-md-4">
-                    <i class="fas fa-heartbeat fa-3x text-primary"></i>
-                    <h4 class="mt-3">Healthy Meal Suggestions</h4>
-                    <p>Receive personalized meal recommendations based on your goals.</p>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h4>Smart Suggestions</h4>
+                        <p>Receive personalized meal recommendations based on your health goals</p>
+                    </div>
                 </div>
             </div>
         </div>
     
-        <!-- Testimonials -->
-        <div class="container text-center mt-5">
-            <h2 class="fw-bold">What Users Say</h2>
-            <div class="row mt-4">
-                <div class="col-md-4">
-                    <p>"Calorator changed the way I track my diet. It’s fast, easy, and accurate!"</p>
-                    <h6>- Anna R.</h6>
+        <!-- Technologies Section -->
+        <div class="technologies-section">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="fw-bold section-title">Technologies We Use</h2>
+                    <p class="section-subtitle">Built with cutting-edge technologies</p>
                 </div>
-                <div class="col-md-4">
-                    <p>"This app helped me stay on top of my health goals. The AI is amazing!"</p>
-                    <h6>- Mark T.</h6>
+                <div class="row g-4">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="tech-card">
+                            <div class="tech-icon">
+                                <i class="fab fa-html5"></i>
+                            </div>
+                            <h4>HTML5</h4>
+                            <p>Modern semantic markup</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="tech-card">
+                            <div class="tech-icon">
+                                <i class="fab fa-js"></i>
+                            </div>
+                            <h4>JavaScript</h4>
+                            <p>Dynamic functionality</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="tech-card">
+                            <div class="tech-icon">
+                                <i class="fab fa-css3-alt"></i>
+                            </div>
+                            <h4>CSS3</h4>
+                            <p>Modern styling</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="tech-card">
+                            <div class="tech-icon">
+                                <i class="fab fa-python"></i>
+                            </div>
+                            <h4>Python</h4>
+                            <p>Backend processing</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="tech-card">
+                            <div class="tech-icon">
+                                <i class="fas fa-flask"></i>
+                            </div>
+                            <h4>Flask</h4>
+                            <p>Web framework</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="tech-card">
+                            <div class="tech-icon">
+                                <i class="fab fa-aws"></i>
+                            </div>
+                            <h4>AWS</h4>
+                            <p>Cloud infrastructure</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="tech-card">
+                            <div class="tech-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h4>OpenAI</h4>
+                            <p>AI integration</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <p>"I love the meal suggestions. I feel healthier and more energetic!"</p>
-                    <h6>- Lisa M.</h6>
+            </div>
+        </div>
+    
+        <!-- Team Section -->
+        <div class="team-section">
+            <div class="container">
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold section-title">Meet Our Team</h2>
+                    <p class="section-subtitle">The minds behind Calorator</p>
+                </div>
+                <div class="row g-3">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="team-card">
+                            <div class="team-card-inner">
+                                <div class="team-card-front">
+                                    <div class="team-avatar">
+                                        <span class="avatar-text">ES</span>
+                                    </div>
+                                    <h4>Erkin Sultonov</h4>
+                                    <p class="role">Front-End Developer</p>
+                                    <p class="education">Senior Computer Engineering</p>
+                                </div>
+                                <div class="team-card-back">
+                                    <div class="team-details">
+                                        <h5>Expertise</h5>
+                                        <ul class="skills-list">
+                                            <li><i class="fas fa-code"></i> Front-End Development</li>
+                                            <li><i class="fas fa-laptop-code"></i> UI/UX Design</li>
+                                            <li><i class="fas fa-mobile-alt"></i> Responsive Design</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 col-md-6">
+                        <div class="team-card">
+                            <div class="team-card-inner">
+                                <div class="team-card-front">
+                                    <div class="team-avatar">
+                                        <span class="avatar-text">JZ</span>
+                                    </div>
+                                    <h4>Jay Zhu</h4>
+                                    <p class="role">Back-End & AI Developer</p>
+                                    <p class="education">Senior Computer Science</p>
+                                </div>
+                                <div class="team-card-back">
+                                    <div class="team-details">
+                                        <h5>Expertise</h5>
+                                        <ul class="skills-list">
+                                            <li><i class="fas fa-brain"></i> AI Development</li>
+                                            <li><i class="fas fa-server"></i> Back-End Systems</li>
+                                            <li><i class="fas fa-robot"></i> Machine Learning</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="team-card">
+                            <div class="team-card-inner">
+                                <div class="team-card-front">
+                                    <div class="team-avatar">
+                                        <span class="avatar-text">CJ</span>
+                                    </div>
+                                    <h4>Chunze Jiang</h4>
+                                    <p class="role">Back-End & AI Developer</p>
+                                    <p class="education">Senior Computer Science</p>
+                                </div>
+                                <div class="team-card-back">
+                                    <div class="team-details">
+                                        <h5>Expertise</h5>
+                                        <ul class="skills-list">
+                                            <li><i class="fas fa-brain"></i> AI Development</li>
+                                            <li><i class="fas fa-server"></i> Back-End Systems</li>
+                                            <li><i class="fas fa-robot"></i> Machine Learning</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="team-card">
+                            <div class="team-card-inner">
+                                <div class="team-card-front">
+                                    <div class="team-avatar">
+                                        <span class="avatar-text">GH</span>
+                                    </div>
+                                    <h4>Garvin Huang</h4>
+                                    <p class="role">Front-End & Data Engineer</p>
+                                    <p class="education">Senior Computer Science</p>
+                                </div>
+                                <div class="team-card-back">
+                                    <div class="team-details">
+                                        <h5>Expertise</h5>
+                                        <ul class="skills-list">
+                                            <li><i class="fas fa-database"></i> Data Engineering</li>
+                                            <li><i class="fas fa-code"></i> Front-End Development</li>
+                                            <li><i class="fas fa-chart-bar"></i> Data Analytics</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    <div class="col-lg-4 col-md-6">
+                        <div class="team-card qa-card">
+                            <div class="team-card-inner">
+                                <div class="team-card-front">
+                                    <div class="team-avatar">
+                                        <span class="avatar-text">GP</span>
+                                    </div>
+                                    <h4>Giuseppe Pugliese</h4>
+                                    <p class="role">idk</p>
+                                    <p class="education">Senior Computer Science</p>
+                                </div>
+                                <div class="team-card-back">
+                                    <div class="team-details">
+                                        <h5>Expertise</h5>
+                                        <ul class="skills-list">
+                                            <li><i class="fas fa-bug"></i> idk</li>
+                                            <li><i class="fas fa-coffee"></i> idk</li>
+                                            <li><i class="fas fa-check-circle"></i> idk</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     
         <!-- Call to Action -->
-        <div class="container text-center mt-5 call-to-action">
-            <h2>Ready to Take Control of Your Diet?</h2>
-            <p>Start tracking your calories effortlessly today!</p>
-            <a href="#track-meal" class="btn btn-success btn-lg">Get Started Now</a>
+        <div class="cta-section">
+            <div class="container">
+                <div class="quote-container">
+                    <div class="quote-mark left-mark">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <div class="quote-content">
+                        <h2 class="quote-text">Eat to live, not live to eat</h2>
+                        <p class="quote-author">- Calorator Team</p>
+                    </div>
+                    <div class="quote-mark right-mark">
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                    <div class="quote-decoration">
+                        <i class="fas fa-utensils decoration-icon"></i>
+                        <i class="fas fa-apple-alt decoration-icon"></i>
+                        <i class="fas fa-carrot decoration-icon"></i>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
     
     
     
     <section id="track-meal" class="page">
-        <div class="container mt-5">
-            <h2>Track a Meal</h2>
-            <input type="file" class="form-control" id="meal-image">
-            <button class="btn btn-primary mt-3" onclick="analyzeMeal()">Analyze</button>
-            <p id="meal-output" class="mt-3"></p>
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="text-center mb-5">
+                        <h2 class="fw-bold section-title">Track Your Meal</h2>
+                        <p class="section-subtitle">Upload a photo of your food and let AI do the magic</p>
+                    </div>
+
+                    <div class="upload-container mb-4">
+                        <div class="upload-area" id="uploadArea">
+                            <input type="file" class="file-input" id="mealImage" accept="image/*" hidden>
+                            <div class="upload-content" id="uploadContent">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Drag & Drop your food image or</p>
+                                <button class="btn btn-primary" onclick="document.getElementById('mealImage').click()">
+                                    Choose File
+                                </button>
+                            </div>
+                            <div class="preview-area d-none" id="previewArea">
+                                <img id="imagePreview" src="" alt="Food Preview">
+                                <div class="preview-controls">
+                                    <button class="btn btn-remove" onclick="removeImage()" title="Remove Image">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-primary btn-lg px-5" id="analyzeBtn" onclick="analyzeMeal()" disabled>
+                            <i class="fas fa-magic me-2"></i>Analyze Meal
+                        </button>
+                    </div>
+
+                    <!-- Loading Overlay -->
+                    <div class="loading-overlay" id="loadingOverlay">
+                        <div class="loading-content">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p id="loadingText">Analyzing your meal...</p>
+                        </div>
+                    </div>
+
+                    <!-- Analysis Results -->
+                    <div class="analysis-results d-none mt-5" id="analysisResults">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title text-center mb-4">Analysis Results</h3>
+                                
+                                <div class="food-identification mb-4">
+                                    <h4 class="gradient-text">Identified Food</h4>
+                                    <p class="food-name">Grilled Chicken Salad with Avocado</p>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <div class="col-md-3 col-6">
+                                        <div class="macro-card">
+                                            <div class="macro-icon">
+                                                <i class="fas fa-fire"></i>
+                                            </div>
+                                            <div class="macro-details">
+                                                <h5>Calories</h5>
+                                                <p>350 kcal</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-6">
+                                        <div class="macro-card">
+                                            <div class="macro-icon">
+                                                <i class="fas fa-drumstick-bite"></i>
+                                            </div>
+                                            <div class="macro-details">
+                                                <h5>Protein</h5>
+                                                <p>28g</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-6">
+                                        <div class="macro-card">
+                                            <div class="macro-icon">
+                                                <i class="fas fa-bread-slice"></i>
+                                            </div>
+                                            <div class="macro-details">
+                                                <h5>Carbs</h5>
+                                                <p>12g</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-6">
+                                        <div class="macro-card">
+                                            <div class="macro-icon">
+                                                <i class="fas fa-cheese"></i>
+                                            </div>
+                                            <div class="macro-details">
+                                                <h5>Fat</h5>
+                                                <p>22g</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-center">
+                                    <button class="btn btn-success btn-lg px-5" id="trackMealBtn" onclick="trackMeal()">
+                                        <i class="fas fa-plus me-2"></i>Track This Meal
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
     
@@ -122,13 +547,112 @@
     </section>
     
     <section id="login" class="page">
-        <div class="container mt-5">
-            <h2>Login</h2>
-            <form onsubmit="loginUser(event)">
-                <input type="text" class="form-control mb-3" placeholder="Username" id="username">
-                <input type="password" class="form-control mb-3" placeholder="Password" id="password">
-                <button type="submit" class="btn btn-primary">Login</button>
+        <div class="container my-5 py-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-5">
+                    <!-- Login Card -->
+                    <div class="card auth-card" id="loginCard">
+                        <div class="card-body p-5">
+                            <!-- Logo and title -->
+                            <div class="text-center mb-4">
+                                <div class="brand-icon-circle mb-4">
+                                    <img src="assets/images/logo.png" alt="Calorator Logo" height="50">
+                                </div>
+                                <h3 class="fw-bold auth-title">Welcome Back</h3>
+                                <p class="text-muted">Sign in to continue to Calorator</p>
+                            </div>
+                            
+                            <!-- Login form -->
+                            <form id="loginForm" onsubmit="loginUser(event)">
+                                <!-- Server response message -->
+                                <div class="alert d-none" id="loginAlert" role="alert"></div>
+                                
+                                <!-- Username field -->
+                                <div class="form-outline mb-4">
+                                    <input type="text" id="username" class="form-control" required />
+                                    <label class="form-label" for="username">Username</label>
+                                </div>
+                                
+                                <!-- Password field -->
+                                <div class="form-outline mb-4">
+                                    <input type="password" id="password" class="form-control" required />
+                                    <label class="form-label" for="password">Password</label>
+                                </div>
+                                
+                                <!-- Submit button -->
+                                <button type="submit" class="btn btn-auth btn-block w-100 mb-4" id="loginButton">
+                                    <span class="spinner-border spinner-border-sm d-none me-2" id="loginSpinner" role="status" aria-hidden="true"></span>
+                                    Sign in
+                                </button>
+                                
+                                <!-- Register link -->
+                                <div class="text-center">
+                                    <p class="mb-0">Don't have an account? 
+                                        <a href="#" class="text-decoration-none auth-link" onclick="toggleAuthCards('registerCard')">Create one</a>
+                                    </p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Register Card (hidden by default) -->
+                    <div class="card auth-card d-none" id="registerCard">
+                        <div class="card-body p-5">
+                            <!-- Logo and title -->
+                            <div class="text-center mb-4">
+                                <div class="brand-icon-circle mb-4">
+                                    <img src="assets/images/logo.png" alt="Calorator Logo" height="50">
+                                </div>
+                                <h3 class="fw-bold auth-title">Create Account</h3>
+                                <p class="text-muted">Join Calorator to start your health journey</p>
+                            </div>
+                            
+                            <!-- Register form -->
+                            <form id="registerForm" onsubmit="registerUser(event)">
+                                <!-- Server response message -->
+                                <div class="alert d-none" id="registerAlert" role="alert"></div>
+                                
+                                <!-- Full name field -->
+                                <div class="form-outline mb-4">
+                                    <input type="text" id="fullName" class="form-control" required />
+                                    <label class="form-label" for="fullName">Full Name</label>
+                                </div>
+
+                                <!-- Email field -->
+                                <div class="form-outline mb-4">
+                                    <input type="email" id="email" class="form-control" required />
+                                    <label class="form-label" for="email">Email</label>
+                                </div>
+                                
+                                <!-- Username field -->
+                                <div class="form-outline mb-4">
+                                    <input type="text" id="newUsername" class="form-control" required />
+                                    <label class="form-label" for="newUsername">Username</label>
+                                </div>
+                                
+                                <!-- Password field -->
+                                <div class="form-outline mb-4">
+                                    <input type="password" id="newPassword" class="form-control" required />
+                                    <label class="form-label" for="newPassword">Password</label>
+                                </div>
+                                
+                                <!-- Submit button -->
+                                <button type="submit" class="btn btn-auth btn-block w-100 mb-4" id="registerButton">
+                                    <span class="spinner-border spinner-border-sm d-none me-2" id="registerSpinner" role="status" aria-hidden="true"></span>
+                                    Create Account
+                                </button>
+                                
+                                <!-- Login link -->
+                                <div class="text-center">
+                                    <p class="mb-0">Already have an account? 
+                                        <a href="#" class="text-decoration-none auth-link" onclick="toggleAuthCards('loginCard')">Sign in</a>
+                                    </p>
+                                </div>
             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
