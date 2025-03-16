@@ -1,0 +1,8 @@
+register
+curl -X POST "http://127.0.0.1:8000/register" -H "Content-Type: application/json" -d '{"username": "testuser", "password": "testpass"}'
+
+login
+curl -X POST "http://127.0.0.1:8000/token" -H "Content-Type: application/x-www-form-urlencoded" -d "username=testuser&password=testpass"
+
+protected
+curl -X GET "http://127.0.0.1:8000/users/me" -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
