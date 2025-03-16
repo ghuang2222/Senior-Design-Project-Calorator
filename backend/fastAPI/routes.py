@@ -25,10 +25,13 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: AsyncSessi
         raise HTTPException(status_code=400, detail="Invalid credentials")
 
     # Create access token
-    access_toke = create_access_token(
-        data={sub: db_user.username},
+    access_token = create_access_token(
+        data={"sub": db_user.username},
         expires_delta=timedelta(minutes=30)
     )
+
+    # Return access token 
+    return {"access_token": access_token, "token_type": "bearer"}
 
 @router.get("/protected")
 async def protected_route(token: str = Depends(oauth2_scheme), db: AsyncSession = Depends(get_db)):
