@@ -4,13 +4,17 @@ import tensorflow as tf
 from PIL import Image
 import io
 from tensorflow.keras.preprocessing import image
+from fastapi import FastAPI, Depends, HTTPException
+from sqlalchemy.ext.asyncio import AsyncSession
+from database import AsyncSessionLocal, get_db
+from crud import get_food_info
 
 app = FastAPI()
 
 # Load the model once at startup
 print("Loading TensorFlow model...")
 model = tf.keras.models.load_model("food_classifier_inceptionv3_fine_tuned.keras")
-class_names = ['apple_pie', 'baby_back_ribs', 'baklava', 'beef_carpaccio',
+class_names = ['apple_gpie', 'baby_back_ribs', 'baklava', 'beef_carpaccio',
                  'beef_tartare', 'beet_salad', 'beignets', 'bibimbap', 
                  'bread_pudding', 'breakfast_burrito', 'bruschetta', 
                  'caesar_salad', 'cannoli', 'caprese_salad', 'carrot_cake', 
@@ -37,7 +41,7 @@ print("Model loaded successfully.")
 
 
 @app.post("/predict/")
-async def predict(file: UploadFile = File(...)):
+async def predict(file: UploadFile = File(...), db: AsyncSession = Depends(get_db)):
     contents = await file.read()
     image = Image.open(io.BytesIO(contents))
     image = image.resize((299, 299))
@@ -51,4 +55,21 @@ async def predict(file: UploadFile = File(...)):
     predictions = model.predict(processed_image)
     predicted_label = class_names[np.argmax(predictions, axis=-1)[0]]
 
-    return {"label": predicted_label, "confidence": float(np.max(predictions))}
+    # Query the db
+    food_info = await get_food_info(db, predicted_label)
+
+    if not food_info:
+        raise HTTPException(status_code=404, detail="Food label not found")
+
+    # Return food information
+    return {
+        "label": food_info.label,
+        "calories": food_info.calories,
+        "protein": food_info.protein,
+        "carbohydrates": food_info.carbohydrates,
+        "fats": food_info.fats,
+        "fiber": food_info.fiber,
+        "sugars": food_info.sugars,
+        "sodium": food_info.sodium
+    }
+
