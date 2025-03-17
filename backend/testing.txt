@@ -1,6 +1,8 @@
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
+AUTHENTICATION
+
 register
 curl -X POST "http://127.0.0.1:8000/register" -H "Content-Type: application/json" -d '{"username": "testuser", "password": "testpass"}'
 
@@ -14,9 +16,13 @@ curl -X GET "http://127.0.0.1:8000/protected" -H "Authorization: Bearer YOUR_ACC
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
-image processing
+IMAGE PROCESSING
 
 curl -X 'POST' 'http://127.0.0.1:8000/predict/' \
      -H 'accept: application/json' \
      -H 'Content-Type: multipart/form-data' \
      -F 'file=@/full/path/to/your_image.jpg'
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
