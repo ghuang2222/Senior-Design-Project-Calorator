@@ -1,0 +1,22 @@
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+register
+curl -X POST "http://127.0.0.1:8000/register" -H "Content-Type: application/json" -d '{"username": "testuser", "password": "testpass"}'
+
+login
+curl -X POST "http://127.0.0.1:8000/login" -H "Content-Type: application/x-www-form-urlencoded" -d "username=testuser&password=testpass"
+
+protected
+curl -X GET "http://127.0.0.1:8000/protected" -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+image processing
+
+curl -X 'POST' 'http://127.0.0.1:8000/predict/' \
+     -H 'accept: application/json' \
+     -H 'Content-Type: multipart/form-data' \
+     -F 'file=@/full/path/to/your_image.jpg'
