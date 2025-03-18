@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+spec:
+  rules:
+  - host: 192.168.49.2.nip.io  # Main host
+    http:
+      paths:
+      - path: /register  # Route traffic to service1
+        pathType: Prefix
+        backend:
+          service:
+            name: fastapi-auth-service  # FastAPI service 1 name
+            port:
+              number: 80
+      - path: /login  # Route traffic to service2
+        pathType: Prefix
+        backend:
+          service:
+            name: fastapi-auth-service  # FastAPI service 2 name
+            port:
+              number: 80
+      # - path: /service3  # Route traffic to service3
+      #   pathType: Prefix
+      #   backend:
+      #     service:
+      #       name: fastapi-service3  # FastAPI service 3 name
+      #       port:
+      #         number: 80

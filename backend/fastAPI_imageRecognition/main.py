@@ -11,6 +11,12 @@ from crud import get_food_info
 
 app = FastAPI()
 
+# Initialize the database
+@app.on_event("startup")
+async def startup():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+
 # Load the model once at startup
 print("Loading TensorFlow model...")
 model = tf.keras.models.load_model("food_classifier_inceptionv3_fine_tuned.keras")

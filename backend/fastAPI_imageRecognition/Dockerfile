@@ -1,6 +1,12 @@
 # Use official Python image
 FROM python:3.12-slim
 
+# Install PostgreSQL client libraries and build tools
+RUN apt-get update && \
+    apt-get install -y \
+    libpq-dev gcc python3-dev && \
+    rm -rf /var/lib/apt/lists/*
+
 # Set the working directory in the container
 WORKDIR /app
 
