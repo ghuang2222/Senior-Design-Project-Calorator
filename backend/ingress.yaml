@@ -28,3 +28,10 @@ spec:
             name: fastapi-imgrec-service  # FastAPI service 3 name
             port:
               number: 80
+      - path: /  # Route traffic to web page
+        pathType: Prefix
+        backend:
+          service:
+            name: html-app-service
+            port:
+              number: 80
