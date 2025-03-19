@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Login functionality
-    function loginUser(event) {
+    async function loginUser(event) {
         event.preventDefault();
         
         // Get form elements
@@ -104,29 +104,59 @@ document.addEventListener("DOMContentLoaded", () => {
         clearMessage("loginAlert");
         
         // Simulate API call (replace with actual backend call)
-        setTimeout(() => {
-            // For demo purposes - in real app, this would be an API call
-            if (username === "admin" && password === "password") {
-                // Successful login
-                showMessage("loginAlert", "Login successful! Redirecting...", "success");
+            try {
+                const response = await fetch('http://192.168.49.2.nip.io/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                    body: new URLSearchParams({
+                        username: username,
+                        password: password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    console.log("Login successful! Access token:", data.access_token);
+                    sessionStorage.setItem("access_token", data.access_token); 
+                    setTimeout(() => {
+                        showUserLoggedIn();
+                        showPage('home');
+                    }, 1000);
+                } else {
+                    showMessage("loginAlert", "Invalid username or password", "danger");
+                    loginButton.disabled = false;
+                    loginSpinner.classList.add("d-none");
+                }
+            } catch (error) {
+                    console.error("Error:", error);
+            };
+
+
+
+            // if (username === "admin" && password === "password") {
+            //     // Successful login
+            //     showMessage("loginAlert", "Login successful! Redirecting...", "success");
                 
-                // Store login state
-                sessionStorage.setItem('isLoggedIn', 'true');
+            //     // Store login state
+            //     sessionStorage.setItem('isLoggedIn', 'true');
                 
-                // Show user as logged in
-                setTimeout(() => {
-                    showUserLoggedIn();
-                    showPage('home');
-                }, 1000);
-            } else {
-                // Failed login
-                showMessage("loginAlert", "Invalid username or password", "danger");
-                loginButton.disabled = false;
-                loginSpinner.classList.add("d-none");
-            }
-        }, 1500);
+            //     // Show user as logged in
+            //     setTimeout(() => {
+            //         showUserLoggedIn();
+            //         showPage('home');
+            //     }, 1000);
+            // } else {
+            //     // Failed login
+            //     showMessage("loginAlert", "Invalid username or password", "danger");
+            //     loginButton.disabled = false;
+            //     loginSpinner.classList.add("d-none");
+            // }
     }
     
+    // NOTE: we are entering pre-alpha test, registration not open for now.
     // Registration functionality
     function registerUser(event) {
         event.preventDefault();
@@ -257,6 +287,7 @@ document.addEventListener("DOMContentLoaded", () => {
         handleFiles(this.files);
     });
 
+    let selectedFile = null;
     function handleFiles(files) {
         if (files.length > 0) {
             const file = files[0];
@@ -270,6 +301,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     
                     // Reset analysis results when new image is uploaded
                     analysisResults.classList.add('d-none');
+
+                    // Store file as a variable
+                    selectedFile = file;
                 }
                 reader.readAsDataURL(file);
             } else {
@@ -290,7 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Make analyzeMeal function global
-    window.analyzeMeal = function() {
+    window.analyzeMeal = async function() {
         const loadingOverlay = document.getElementById('loadingOverlay');
         const loadingText = document.getElementById('loadingText');
         const analyzeBtn = document.getElementById('analyzeBtn');
@@ -300,18 +334,75 @@ document.addEventListener("DOMContentLoaded", () => {
         loadingText.textContent = 'Analyzing your meal...';
         analyzeBtn.disabled = true;
 
-        // Simulate API call with timeout
-        setTimeout(() => {
-            // Hide loading overlay
-            loadingOverlay.style.display = 'none';
-            analyzeBtn.disabled = false;
+        if (!selectedFile) {
+            alert('No file selected');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+
+        try {
+            const response = await fetch('http://192.168.49.2.nip.io/predict', {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+
+            },
+                body: formData
+            });
+
+            if (response.ok) {
+                const data = await response.json(); // Parse JSON response
+                console.log(data);
+                
+                // Update the food name
+                const foodNameElement = document.querySelector('.food-name');
+                foodNameElement.textContent = data.label; 
+
+                // Update the macros (calories, protein, carbs, fat)
+                const caloriesElement = document.querySelector('.macro-card1:nth-child(1) .macro-details p');
+                const proteinElement = document.querySelector('.macro-card2:nth-child(1) .macro-details p');
+                const carbsElement = document.querySelector('.macro-card3:nth-child(1) .macro-details p');
+                const fatElement = document.querySelector('.macro-card4:nth-child(1) .macro-details p');
+
+                caloriesElement.textContent = data.calories; 
+                proteinElement.textContent = data.protein; 
+                carbsElement.textContent = data.carbohydrates; 
+                fatElement.textContent = data.fats; 
+
+
+
+
+
+
+                // Hide loading overlay
+                loadingOverlay.style.display = 'none';
+                analyzeBtn.disabled = false;
+                
+                // Show results
+                analysisResults.classList.remove('d-none');
+                
+                // Scroll to results
+                analysisResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                console.error('Error:', response.status, await response.text());
+            }
+        } catch (error) {
+                console.error("Error:", error);
+        };
+
+        // setTimeout(() => {
+        //     // Hide loading overlay
+        //     loadingOverlay.style.display = 'none';
+        //     analyzeBtn.disabled = false;
             
-            // Show results
-            analysisResults.classList.remove('d-none');
+        //     // Show results
+        //     analysisResults.classList.remove('d-none');
             
-            // Scroll to results
-            analysisResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 5000); // 5 seconds delay
+        //     // Scroll to results
+        //     analysisResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // }, 5000); // 5 seconds delay
     }
 
     // Make trackMeal function global

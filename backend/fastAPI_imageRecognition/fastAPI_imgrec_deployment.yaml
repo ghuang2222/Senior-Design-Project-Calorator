@@ -16,7 +16,7 @@ spec:
         - name: calorator
       containers:
         - name: fastapi-imgrec
-          image: unforgettablejay/calorator:imgrec_v4
+          image: unforgettablejay/calorator:imgrec_v5
           ports:
             - containerPort: 8000  # Internally using port 8000
 
