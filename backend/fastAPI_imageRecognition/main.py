@@ -8,6 +8,7 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from database import AsyncSessionLocal, get_db
 from crud import get_food_info
+from database import engine, Base
 
 app = FastAPI()
 
@@ -46,7 +47,7 @@ class_names = ['apple_gpie', 'baby_back_ribs', 'baklava', 'beef_carpaccio',
 print("Model loaded successfully.")
 
 
-@app.post("/predict/")
+@app.post("/predict")
 async def predict(file: UploadFile = File(...), db: AsyncSession = Depends(get_db)):
     contents = await file.read()
     image = Image.open(io.BytesIO(contents))

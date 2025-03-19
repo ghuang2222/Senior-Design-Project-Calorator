@@ -26,3 +26,10 @@ curl -X 'POST' 'http://127.0.0.1:8000/predict/' \
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
+minikube ip: 192.168.49.2.nip.io
+
+
+curl -X 'POST' 'http://192.168.49.2.nip.io/predict/' \
+     -H 'accept: application/json' \
+     -H 'Content-Type: multipart/form-data' \
+     -F 'file=@steak1.jpg'

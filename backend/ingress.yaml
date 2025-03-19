@@ -21,10 +21,10 @@ spec:
             name: fastapi-auth-service  # FastAPI service 2 name
             port:
               number: 80
-      # - path: /service3  # Route traffic to service3
-      #   pathType: Prefix
-      #   backend:
-      #     service:
-      #       name: fastapi-service3  # FastAPI service 3 name
-      #       port:
-      #         number: 80
+      - path: /predict  # Route traffic to service3
+        pathType: Prefix
+        backend:
+          service:
+            name: fastapi-imgrec-service  # FastAPI service 3 name
+            port:
+              number: 80

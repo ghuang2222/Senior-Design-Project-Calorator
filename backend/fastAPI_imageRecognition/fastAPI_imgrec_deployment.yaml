@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-imgrec
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastapi-imgrec
+  template:
+    metadata:
+      labels:
+        app: fastapi-imgrec
+    spec:
+      imagePullSecrets:
+        - name: calorator
+      containers:
+        - name: fastapi-imgrec
+          image: unforgettablejay/calorator:imgrec_v4
+          ports:
+            - containerPort: 8000  # Internally using port 8000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastapi-imgrec-service
+spec:
+  selector:
+    app: fastapi-imgrec
+  ports:
+    - protocol: TCP
+      port: 80       # Expose it on port 80
+      targetPort: 8000  # Inside the container, it's listening on port 8000
+  type: NodePort
