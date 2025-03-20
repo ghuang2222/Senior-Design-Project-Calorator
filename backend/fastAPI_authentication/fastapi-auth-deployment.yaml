@@ -16,7 +16,7 @@ spec:
         - name: calorator
       containers:
         - name: fastapi-auth
-          image: unforgettablejay/calorator:auth_v3
+          image: unforgettablejay/calorator:auth_v4
           ports:
             - containerPort: 8000  # Internally using port 8000
 

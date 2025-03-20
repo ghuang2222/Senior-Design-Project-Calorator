@@ -6,3 +6,4 @@ data:
   init-db.sql: |
     CREATE DATABASE auth_db;
     CREATE DATABASE food_db;
+  

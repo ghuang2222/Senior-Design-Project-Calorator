@@ -16,7 +16,7 @@ spec:
         - name: calorator
       containers:
       - name: html-app
-        image: unforgettablejay/calorator:web_v3
+        image: unforgettablejay/calorator:web_v4
         ports:
         - containerPort: 80
 
